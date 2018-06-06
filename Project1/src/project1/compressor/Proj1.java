@@ -9,16 +9,18 @@ import java.util.AbstractList;
 import java.util.Scanner;
 
 /**
+ * Program that uses the MoveToFront Heuristic to 
+ * 
  * @author Arturo Salinas
- *
  */
 public class Proj1 {
 
     /**
-     * @param args
+     * Main method for the programming that executes it. 
+     * 
+     * @param args is the command line arguments
      */
     public static void main(String[] args) {
-        //TODO program should get first line of file and tell if it is to be compressed or decompressed
         Scanner console = new Scanner(System.in);
         String filename = "";
 
@@ -29,10 +31,12 @@ public class Proj1 {
         try {
             Scanner fileChecker = new Scanner(new FileInputStream(filename));
             String firstFileElement = fileChecker.next();
+            
             if(firstFileElement.substring(0, 1).equals("0 ")) {
-                compressFile(filename);   
-            } else {
                 decompressFile(filename);
+            } else {
+                
+                compressFile(filename);  
             }
             
         
@@ -43,22 +47,31 @@ public class Proj1 {
     }
     
     /**
-     * Method that handles the IO
+     * Method that handles the compression of a file
+     * 
+     * @filename is the name of the file to compress
      */
     public static void compressFile(String filename) {
         Scanner fileReader;
         System.out.println("The file to compress is: " + filename);
         try {
             fileReader = new Scanner(new FileInputStream(filename));
-            LinkedMTFList<String> words = new LinkedMTFList<String>();
+            LinkedMTFList<String> wordList = new LinkedMTFList<String>();
+            String line;
+            Scanner lineScanner;
             while(fileReader.hasNextLine()) {
+                line = fileReader.nextLine();
+                lineScanner = new Scanner(line);
                 
-                
+                while(lineScanner.hasNext()) {
+                    
+                    
+                }
                 
             }
             
         } catch (FileNotFoundException e) {
-            System.out.println("failed");
+            System.out.println("Unable to process file.");
         }
         
         
@@ -82,7 +95,7 @@ public class Proj1 {
 
 
 /**
- * The LinkedAbstractList Class.
+ * The LinkedMoveToFrontList Class.
  * 
  * @author Arturo Salinas
  * @param <E> the element type
@@ -259,12 +272,12 @@ class LinkedMTFList<E> extends AbstractList<E> {
          *
          * @param data the value to store
          * @param next the next ListNode
-         *//*
+         */
         public ListNode(E data, ListNode next) {
             this.data = data;
             this.next = next;
         }
-        */
+        
         
     }
 
