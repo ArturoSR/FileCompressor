@@ -19,27 +19,27 @@ public class Proj1 {
      */
     public static void main(String[] args) {
         //TODO program should get first line of file and tell if it is to be compressed or decompressed
-        System.out.println("Do you wish to compress or decompress a file?");
-        System.out.println("1. Compress");
-        System.out.println("2. Decompress");
-        System.out.println("3. Quit");
         Scanner console = new Scanner(System.in);
-        int userChoice = console.nextInt();
         String filename = "";
+
+        System.out.println("What is the name of the file to compress?");
+        console.nextLine();
+        filename = console.nextLine();
+        filename = filename.trim();
+        try {
+            Scanner fileChecker = new Scanner(new FileInputStream(filename));
+            String firstFileElement = fileChecker.next();
+            if(firstFileElement.substring(0, 1).equals("0 ")) {
+                compressFile(filename);   
+            } else {
+                decompressFile(filename);
+            }
+            
         
-        if(userChoice == 1) {
-            System.out.println("What is the name of the file to compress?");
-            console.nextLine();
-            filename = console.nextLine();
-            filename = filename.trim();
-            compressFile(filename);
-        } else if (userChoice == 2) {
-            System.out.println("What is the name of the file to decompress?");
-        } else {
-            System.out.println("Invalid Input");
+            console.close();
+        } catch (FileNotFoundException e) {
+            
         }
-        
-        console.close();
     }
     
     /**
@@ -65,6 +65,15 @@ public class Proj1 {
         
     }
 
+    /**
+     * Method that is used to decompress a file. 
+     * 
+     * @param filename
+     */
+    public static void decompressFile(String filename) {
+        
+    }
+    
 }
 
 
