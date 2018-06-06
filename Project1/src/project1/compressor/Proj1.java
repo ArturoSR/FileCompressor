@@ -64,7 +64,7 @@ public class Proj1 {
                 lineScanner = new Scanner(line);
                 
                 while(lineScanner.hasNext()) {
-                    
+                    wordList.lookUp(lineScanner.next());
                     
                 }
                 
@@ -142,7 +142,6 @@ class LinkedMTFList<E> extends AbstractList<E> {
         //If it was found then move that element to the front. 
         if(!found) {
             insertAtFront(element);
-            
             return -1;
         } else {
             moveToFront(element);
@@ -152,9 +151,35 @@ class LinkedMTFList<E> extends AbstractList<E> {
         
     }
     
-    
+    /**
+     * Method that looks for where a word is in the list and then moves it to the front.
+     * Bridges gap where word used to be in order to keep list in order.
+     * Old node gets garbage collected.
+     * 
+     * @param foundWord is the word to look for to move the list node of.
+     */
     public void moveToFront(E foundWord) {
-        
+        ListNode word = head;
+        ListNode prev = head;
+        while(word != null) {
+            //When it gets to the appropriate node
+            if(word.data.equals(foundWord)) {
+                //Stop here and prev bridges gap between the nodes
+                prev.next = word.next;
+                
+                //Next reference points to the head 
+                word.next = head;
+                //Word now at front
+                head = word;
+                
+                
+            }
+            
+            
+            //Prev stays where word previously was and word node moves to next one.
+            prev = word;
+            word = word.next;
+        }
     }
     
     /**
