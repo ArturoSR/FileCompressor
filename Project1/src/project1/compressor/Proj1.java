@@ -103,7 +103,7 @@ public class Proj1 {
 class LinkedMTFList<E> extends AbstractList<E> {
 
     /** The front of the list. */
-    private ListNode front;
+    private ListNode head;
 
     /** The size. */
     private int size;
@@ -115,11 +115,73 @@ class LinkedMTFList<E> extends AbstractList<E> {
      * @param capacity the maximum capacity of the list
      */
     public LinkedMTFList() {
-        front = null;
+        head = null;
         size = 0;
 
     }
 
+    /**
+     * Method that looks to see if a word has been stored in the list.
+     * 
+     * @param element is the word to see if it exists in the list.
+     * @return index of the word. If it is not found then return -1.
+     */
+    public int lookUp(E element) {
+        int index = 1;
+        boolean found = false;
+        for (ListNode searcher = head; searcher != null; searcher = searcher.next) {
+            if (searcher.data.equals(element)) {
+                found = true;
+                break;
+            } else {
+                index++;
+            }
+        }
+        
+        //If the element is not in the list create it in the list and return -1
+        //If it was found then move that element to the front. 
+        if(!found) {
+            insertAtFront(element);
+            
+            return -1;
+        } else {
+            moveToFront(element);
+            return index;
+        }
+        
+        
+    }
+    
+    
+    public void moveToFront(E foundWord) {
+        
+    }
+    
+    /**
+     * Method that adds a new element to the linkedList at the head (front).
+     * 
+     * @param element is the information to be put in a node. 
+     */
+    public void insertAtFront(E element) {
+        if (element == null) {
+            throw new NullPointerException("Cannot add a null element");
+        }
+        
+        //If the list is empty then just add at head. 
+        if (head == null) { 
+           head = new ListNode(element, null);
+        } else {
+            //Create the new elements listNode
+            ListNode newWord = new ListNode(element, null);
+            newWord.next = head;
+            //Point back to head
+            head = newWord;
+        }
+
+               
+    }
+    
+    
     /**
      * Gets the list node.
      *
@@ -127,7 +189,7 @@ class LinkedMTFList<E> extends AbstractList<E> {
      * @return the list node at the index
      */
     private ListNode getListNode(int idx) {
-        ListNode current = front;
+        ListNode current = head;
         for (int i = 0; i < idx && current != null; i++) {
             current = current.next;
         }
@@ -152,7 +214,7 @@ class LinkedMTFList<E> extends AbstractList<E> {
             throw new IllegalArgumentException("Cannot have duplicates");
         }
         ListNode node = new ListNode(element);
-        ListNode current = front; // should be after the new ListNode
+        ListNode current = head; // should be after the new ListNode
         ListNode last = null; // should be before the new ListNode
         for (int i = 0; i < idx && current != null; i++) {
             last = current;
@@ -161,7 +223,7 @@ class LinkedMTFList<E> extends AbstractList<E> {
         if (last != null) {
             last.next = node;
         } else {
-            front = node;
+            head = node;
         }
         node.next = current;
         size++;
@@ -173,7 +235,7 @@ class LinkedMTFList<E> extends AbstractList<E> {
      * @return true if duplicate
      */
     public boolean checkDuplicate(E value) {
-        for (ListNode e = front; e != null; e = e.next) {
+        for (ListNode e = head; e != null; e = e.next) {
             if (e.data.equals(value)) {
             return true;
             }
@@ -205,7 +267,7 @@ class LinkedMTFList<E> extends AbstractList<E> {
         if (idx < 0 || idx >= size()) {
             throw new IndexOutOfBoundsException("Problem with specified index");
         }
-        ListNode current = front;
+        ListNode current = head;
         for (int i = 0; i < idx && current != null; i++) {
             current = current.next;
         }
