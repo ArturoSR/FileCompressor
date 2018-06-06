@@ -24,8 +24,7 @@ public class Proj1 {
         Scanner console = new Scanner(System.in);
         String filename = "";
 
-        System.out.println("What is the name of the file to compress?");
-        console.nextLine();
+        System.out.println("What is the name of the file?");
         filename = console.nextLine();
         filename = filename.trim();
         try {
@@ -35,7 +34,6 @@ public class Proj1 {
             if(firstFileElement.substring(0, 1).equals("0 ")) {
                 decompressFile(filename);
             } else {
-                
                 compressFile(filename);  
             }
             
@@ -59,12 +57,20 @@ public class Proj1 {
             LinkedMTFList<String> wordList = new LinkedMTFList<String>();
             String line;
             Scanner lineScanner;
+            int idx;
             while(fileReader.hasNextLine()) {
                 line = fileReader.nextLine();
                 lineScanner = new Scanner(line);
                 
                 while(lineScanner.hasNext()) {
-                    wordList.lookUp(lineScanner.next());
+                    String wordToFind = lineScanner.next();
+                    idx = wordList.lookUp(wordToFind);
+                    
+                    if(idx == -1) {
+                        System.out.print(wordToFind + " ");
+                    } else {
+                        System.out.print(idx);
+                    }
                     
                 }
                 
