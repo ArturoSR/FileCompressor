@@ -3,13 +3,15 @@
  */
 package project1.compressor;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.AbstractList;
 import java.util.Scanner;
 
 /**
- * Program that uses the MoveToFront Heuristic to 
+ * Program that uses the MoveToFront Heuristic to compress and decompress files.
  * 
  * @author Arturo Salinas
  */
@@ -23,21 +25,26 @@ public class Proj1 {
     public static void main(String[] args) {
         Scanner console = new Scanner(System.in);
         String filename = "";
+        String outfile = "";
 
         System.out.println("What is the name of the file?");
         filename = console.nextLine();
         filename = filename.trim();
+        System.out.println("What is the name of the file to print to?");
+        outfile = console.nextLine();
+        outfile = outfile.trim();
+        
         try {
             Scanner fileChecker = new Scanner(new FileInputStream(filename));
             String firstFileElement = fileChecker.next();
             
             if(firstFileElement.substring(0, 1).equals("0 ")) {
-                decompressFile(filename);
+                decompressFile(filename, outfile);
             } else {
-                compressFile(filename);  
+                compressFile(filename, outfile);  
             }
             
-        
+            fileChecker.close();
             console.close();
         } catch (FileNotFoundException e) {
             
@@ -45,18 +52,24 @@ public class Proj1 {
     }
     
     /**
-     * Method that handles the compression of a file
+     * Method that handles the compression of a file. 
      * 
-     * @filename is the name of the file to compress
+     * 
+     * @param filename is the name of the file to compress
+     * @param outfile is the name of the file to write to
      */
-    public static void compressFile(String filename) {
+    public static void compressFile(String filename, String outfile) {
         Scanner fileReader;
+        PrintStream writer;
         try {
             fileReader = new Scanner(new FileInputStream(filename));
+            writer = new PrintStream(new File(outfile));
             LinkedMTFList<String> wordList = new LinkedMTFList<String>();
             String line;
             Scanner lineScanner;
             int idx;
+            writer.print("0 ");
+            
             while(fileReader.hasNextLine()) {
                 line = fileReader.nextLine();
                 line = line.replaceAll("[^\\w\\s]"," ");
@@ -69,13 +82,23 @@ public class Proj1 {
                     
                     if(idx == -1) {
                         System.out.print(wordToFind + " ");
+                        writer.print(wordToFind + " ");
                     } else {
                         System.out.print(idx + " ");
-                    }
-                    
+                        writer.print(idx + " ");
+                    }   
                 }
+                writer.print("\n");
                 
             }
+            File uncompFile = new File(filename); 
+            File compFile = new File(outfile);
+            long compressedLength = compFile.length();
+            writer.print("0 ");
+            writer.print("Uncompressed: " + uncompFile.length() + " bytes;  ");
+            writer.print("Compressed: " + compressedLength + " bytes" );
+            
+            
             
         } catch (FileNotFoundException e) {
             System.out.println("Unable to process file.");
@@ -89,8 +112,9 @@ public class Proj1 {
      * Method that is used to decompress a file. 
      * 
      * @param filename
+     * @param outfile 
      */
-    public static void decompressFile(String filename) {
+    public static void decompressFile(String filename, String outfile) {
         
     }
     
