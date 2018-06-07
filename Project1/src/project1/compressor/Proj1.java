@@ -59,6 +59,7 @@ public class Proj1 {
             int idx;
             while(fileReader.hasNextLine()) {
                 line = fileReader.nextLine();
+                line = line.replaceAll("[^\\w\\s]"," ");
                 lineScanner = new Scanner(line);
                 
                 while(lineScanner.hasNext()) {
@@ -67,9 +68,9 @@ public class Proj1 {
                     idx = wordList.lookUp(wordToFind);
                     
                     if(idx == -1) {
-                        System.out.println(wordToFind + " ");
+                        System.out.print(wordToFind + " ");
                     } else {
-                        System.out.println(idx + " ");
+                        System.out.print(idx + " ");
                     }
                     
                 }
@@ -136,9 +137,9 @@ class LinkedMTFList<E> extends AbstractList<E> {
         int index = 1;
         boolean found = false;
         for (ListNode searcher = head; searcher != null; searcher = searcher.next, index++) {
-            System.out.println("Elements in list: " + searcher.data );
+            //System.out.println("Elements in list: " + searcher.data );
             if (searcher.data.equals(element)) {
-                System.out.print("'" + element + "'"+ "was found");
+                //System.out.print("'" + element + "'"+ "was found");
                 found = true;
                 break;
             } 
