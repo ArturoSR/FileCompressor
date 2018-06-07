@@ -166,10 +166,10 @@ class LinkedMTFList<E> extends AbstractList<E> {
      */
     public void moveToFront(E foundWord) {
         ListNode word = head;
-        ListNode prev = head;
+        ListNode prev = null;
         while(word != null) {
             //When it gets to the appropriate node
-            if(word.data.equals(foundWord)) {
+            if(word.data.equals(foundWord) && prev != null) {
                 //Stop here and prev bridges gap between the nodes
                 prev.next = word.next;
                 
