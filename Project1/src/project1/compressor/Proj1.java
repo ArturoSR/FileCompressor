@@ -51,7 +51,6 @@ public class Proj1 {
      */
     public static void compressFile(String filename) {
         Scanner fileReader;
-        System.out.println("The file to compress is: " + filename);
         try {
             fileReader = new Scanner(new FileInputStream(filename));
             LinkedMTFList<String> wordList = new LinkedMTFList<String>();
@@ -64,12 +63,13 @@ public class Proj1 {
                 
                 while(lineScanner.hasNext()) {
                     String wordToFind = lineScanner.next();
+                    
                     idx = wordList.lookUp(wordToFind);
                     
                     if(idx == -1) {
-                        System.out.print(wordToFind + " ");
+                        System.out.println(wordToFind + " ");
                     } else {
-                        System.out.print(idx);
+                        System.out.println(idx + " ");
                     }
                     
                 }
@@ -135,13 +135,13 @@ class LinkedMTFList<E> extends AbstractList<E> {
     public int lookUp(E element) {
         int index = 1;
         boolean found = false;
-        for (ListNode searcher = head; searcher != null; searcher = searcher.next) {
+        for (ListNode searcher = head; searcher != null; searcher = searcher.next, index++) {
+            System.out.println("Elements in list: " + searcher.data );
             if (searcher.data.equals(element)) {
+                System.out.print("'" + element + "'"+ "was found");
                 found = true;
                 break;
-            } else {
-                index++;
-            }
+            } 
         }
         
         //If the element is not in the list create it in the list and return -1
@@ -178,6 +178,7 @@ class LinkedMTFList<E> extends AbstractList<E> {
                 //Word now at front
                 head = word;
                 
+                break;
                 
             }
             
@@ -209,7 +210,7 @@ class LinkedMTFList<E> extends AbstractList<E> {
             head = newWord;
         }
 
-               
+        size++;
     }
     
     
