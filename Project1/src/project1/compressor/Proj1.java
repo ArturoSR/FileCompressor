@@ -81,10 +81,10 @@ public class Proj1 {
                     idx = wordList.lookUp(wordToFind);
                     
                     if(idx == -1) {
-                        System.out.print(wordToFind + " ");
+                        //System.out.print(wordToFind + " ");
                         writer.print(wordToFind + " ");
                     } else {
-                        System.out.print(idx + " ");
+                        //System.out.print(idx + " ");
                         writer.print(idx + " ");
                     }   
                 }
@@ -238,133 +238,41 @@ class LinkedMTFList<E> extends AbstractList<E> {
         size++;
     }
     
-    
-    /**
-     * Gets the list node.
-     *
-     * @param idx the index to get from
-     * @return the list node at the index
-     */
-    private ListNode getListNode(int idx) {
-        ListNode current = head;
-        for (int i = 0; i < idx && current != null; i++) {
-            current = current.next;
-        }
-        return current;
-    }
-    
 
     /**
-     * Adds the list node
-     * @param idx the index to add at
-     * @param element the element to add
-     */
-    @Override
-    public void add(int idx, E element) {
-        if (element == null) {
-            throw new NullPointerException("Cannot add a null element");
-        }
-        if (idx < 0 || idx > this.size()) {
-            throw new IndexOutOfBoundsException("Problem with specified index");
-        }
-        if (checkDuplicate(element)) {
-            throw new IllegalArgumentException("Cannot have duplicates");
-        }
-        ListNode node = new ListNode(element);
-        ListNode current = head; // should be after the new ListNode
-        ListNode last = null; // should be before the new ListNode
-        for (int i = 0; i < idx && current != null; i++) {
-            last = current;
-            current = current.next;
-        }
-        if (last != null) {
-            last.next = node;
-        } else {
-            head = node;
-        }
-        node.next = current;
-        size++;
-    }
-    
-    /**
-     * Checks if value is already in the list
-     * @param value the value to compare with
-     * @return true if duplicate
-     */
-    public boolean checkDuplicate(E value) {
-        for (ListNode e = head; e != null; e = e.next) {
-            if (e.data.equals(value)) {
-            return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Remove from the list
-     * @param idx the index to remove from
-     */
-    @Override
-    public E remove(int idx) {
-        if (idx < 0 || idx >= size()) {
-            throw new IndexOutOfBoundsException("Problem with specified index");
-        }
-        ListNode old = getListNode(idx);
-        getListNode(idx - 1).next = getListNode(idx + 1);
-        size--;
-        return old.data;
-    }
-
-    /**
-     * Gets from the list.
-     * @param idx the index to get from
+     * Required method for getting a node. 
+     * Part of the methods required for an abstract list.
+     * 
+     * @param idx the index to get the data from
+     * @return the data held at the idx 
      */
     @Override
     public E get(int idx) {
-        if (idx < 0 || idx >= size()) {
-            throw new IndexOutOfBoundsException("Problem with specified index");
-        }
         ListNode current = head;
         for (int i = 0; i < idx && current != null; i++) {
             current = current.next;
         }
         if (current != null) {
             return current.data;
+        } else {
+            return null;
         }
-        return null;
     }
 
-    /**
-     * Sets the value of an element in the list
-     * @param idx the index to set at
-     * @param element the value to set
-     */
-    @Override
-    public E set(int idx, E element) {
-        if (element == null) {
-            throw new NullPointerException("Cannot set a null element");
-        }
-        if (idx < 0 || idx >= size()) {
-            throw new IndexOutOfBoundsException("Problem with specified index");
-        }
-        ListNode node = getListNode(idx);
-        if (node != null) {
-            ListNode newNode = new ListNode(element);
-            getListNode(idx - 1).next = newNode;
-            newNode.next = node.next;
-            return node.data;
-        }
-        return null;
-    }
 
     /**
-     * Gets the size of the list
+     * Returns the list size
+     * Part of methods required for an abstract list
+     * 
+     * @return an int representation of the size of the list.
      */
     @Override
     public int size() {
-        return this.size;
+        return size;
     }
 
+    
+    
     /**
      * The ListNode inner class.
      */
