@@ -298,12 +298,11 @@ class LinkedMTFList<E> extends AbstractList<E> {
     @Override
     public E get(int idx) {
         ListNode current = head;
-//        for (int i = 0; i < idx && current != null; i++) {
-//            current = current.next;
-//        }
-        int i = 0;
+
+        int i = 1;
         while (i < idx) 
         {
+            
             current = current.next;
             i++;
         }
