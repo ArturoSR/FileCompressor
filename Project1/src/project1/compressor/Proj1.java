@@ -141,20 +141,25 @@ public class Proj1 {
                     
                     if(lineScanner.hasNextInt()) {
                         idx = lineScanner.nextInt();
-                        String indexedWord = wordList.get(idx);
-                        wordList.moveToFront(indexedWord);
-                        //writer.print(indexedWord + " ");
-                        System.out.print(indexedWord + " "); 
+                        if(idx == 0) {
+                            System.out.println("");
+                        } else {
+                            String indexedWord = wordList.get(idx);
+                            //System.out.println(indexedWord);
+                            wordList.moveToFront(indexedWord);
+                            writer.print(indexedWord + " ");
+                            //System.out.print(indexedWord + " "); 
+                        }
                     } else {
                         String word = lineScanner.next();
-                        wordList.insertAtFront(word);
-                        //writer.print(lineScanner.next() + " ");
-                        System.out.print(word + " ");
+                        wordList.lookUp(word);
+                        writer.print(word + " ");
+                        //System.out.print(word + " ");
                     }
                     
                 }
-                //writer.print("\n");
-                System.out.println("\n");
+                writer.print("\n");
+               // System.out.println("\n");
             }
             
             
@@ -329,14 +334,14 @@ class LinkedMTFList<E> extends AbstractList<E> {
      */
     private class ListNode {
 
-        /** The data. */
+        /** The data of the listnodes */
         private E data;
     
-        /** The next. */
+        /** The next reference. */
         private ListNode next;
     
         /**
-         * Instantiates a new list node.
+         * Constructor for the listnode
          *
          * @param data the value to store
          */
@@ -346,7 +351,7 @@ class LinkedMTFList<E> extends AbstractList<E> {
     
         
         /**
-         * Instantiates a new list node.
+         * Constructor for the listnode with a next reference.
          *
          * @param data the value to store
          * @param next the next ListNode
