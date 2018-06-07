@@ -36,9 +36,9 @@ public class Proj1 {
         
         try {
             Scanner fileChecker = new Scanner(new FileInputStream(filename));
-            String firstFileElement = fileChecker.next();
+            String firstFileElement = fileChecker.nextLine();
             
-            if(firstFileElement.substring(0, 1).equals("0 ")) {
+            if(firstFileElement.contains("0 ")) {
                 decompressFile(filename, outfile);
             } else {
                 compressFile(filename, outfile);  
@@ -47,7 +47,7 @@ public class Proj1 {
             fileChecker.close();
             console.close();
         } catch (FileNotFoundException e) {
-            
+            System.out.println("File was not found");
         }
     }
     
@@ -111,11 +111,56 @@ public class Proj1 {
     /**
      * Method that is used to decompress a file. 
      * 
-     * @param filename
-     * @param outfile 
+     * @param filename is the name of the file to decompress
+     * @param outfile is the name of the file to write to. 
      */
     public static void decompressFile(String filename, String outfile) {
-        
+        Scanner fileReader;
+        PrintStream writer;
+        try {
+            fileReader = new Scanner(new FileInputStream(filename));
+            writer = new PrintStream(new File(outfile));
+            LinkedMTFList<String> wordList = new LinkedMTFList<String>();
+            String line;
+            Scanner lineScanner;
+            int idx;
+            
+            
+            while(fileReader.hasNextLine()) {
+                line = fileReader.nextLine();
+                line = line.replaceAll("[^\\w\\s]"," ");
+                lineScanner = new Scanner(line);
+                idx = 0;
+                
+                if(line.contains("0 U")) {
+                    break;
+                }
+                while(lineScanner.hasNext()) {
+                    
+                    
+                    
+                    if(lineScanner.hasNextInt()) {
+                        idx = lineScanner.nextInt();
+                        String indexedWord = wordList.get(idx);
+                        wordList.moveToFront(indexedWord);
+                        //writer.print(indexedWord + " ");
+                        System.out.print(indexedWord + " "); 
+                    } else {
+                        String word = lineScanner.next();
+                        wordList.insertAtFront(word);
+                        //writer.print(lineScanner.next() + " ");
+                        System.out.print(word + " ");
+                    }
+                    
+                }
+                //writer.print("\n");
+                System.out.println("\n");
+            }
+            
+            
+        }catch (FileNotFoundException e) {
+            System.out.println("File was not Found");
+        }
     }
     
 }
@@ -141,9 +186,8 @@ class LinkedMTFList<E> extends AbstractList<E> {
 
 
     /**
-     * Instantiates a new linked abstract list.
+     * Constructor for the Move to Front List
      *
-     * @param capacity the maximum capacity of the list
      */
     public LinkedMTFList() {
         head = null;
@@ -249,9 +293,16 @@ class LinkedMTFList<E> extends AbstractList<E> {
     @Override
     public E get(int idx) {
         ListNode current = head;
-        for (int i = 0; i < idx && current != null; i++) {
+//        for (int i = 0; i < idx && current != null; i++) {
+//            current = current.next;
+//        }
+        int i = 0;
+        while (i < idx) 
+        {
             current = current.next;
+            i++;
         }
+        
         if (current != null) {
             return current.data;
         } else {
